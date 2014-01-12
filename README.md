@@ -7,7 +7,7 @@ ___
 
 ## Eckdaten
 
-* Abgabe: 05.02.2014
+* Abgabe: 12.03.2014
 * Frist für eigene Idee: 13.01.2014, 16 Uhr
 * ~~Frist für Teamaufteilung 13.01.2014, 12 Uhr~~
 
@@ -15,12 +15,12 @@ ___
 
 ## Möglichkeiten
 
-1. Radiosender
-2. Börsenkurse
-3. Filmdaten
-4. Wetterdaten
-5. Spiegel
-6. Eigene Idee
+1. Radiosender UNSERE WAHL
+~~2. Börsenkurse~~
+~~3. Filmdaten~~
+~~4. Wetterdaten~~
+~~5. Spiegel~~
+~~6. Eigene Idee~~
 
 ___
 
