@@ -16,11 +16,11 @@ ___
 ## Möglichkeiten
 
 1. Radiosender UNSERE WAHL
-~~2. Börsenkurse~~
-~~3. Filmdaten~~
-~~4. Wetterdaten~~
-~~5. Spiegel~~
-~~6. Eigene Idee~~
+2. ~~Börsenkurse~~
+3. ~~Filmdaten~~
+4. ~~Wetterdaten~~
+5. ~~Spiegel~~
+6. ~~Eigene Idee~~
 
 ___
 
