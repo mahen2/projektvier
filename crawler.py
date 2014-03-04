@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 # Quelle website-import: http://answers.oreilly.com/topic/1088-how-to-build-a-simple-web-crawler/
+
 import urllib2, re, csv
 from bs4 import BeautifulSoup
 website = "http://www.einslive.de/musik/playlists/index.jsp?wday=50&hour=14&minute=20"

@@ -8,7 +8,7 @@ ___
 ## Eckdaten
 
 * Abgabe: 12.03.2014
-* Frist für eigene Idee: 13.01.2014, 16 Uhr
+* ~~Frist für eigene Idee: 13.01.2014, 16 Uhr~~
 * ~~Frist für Teamaufteilung 13.01.2014, 12 Uhr~~
 
 ___
@@ -32,3 +32,16 @@ ___
 * Auswertung visualisieren (matplotlib)
 * Dokumentation und Beschreibung (Sphinx)
 
+## Auswertungsbeispiele
+
+* Häufigkeit (Songs, Künstler)
+* Zeitpunkt (Uhrzeit, Tag)
+* Top X (Wochencharts, etc.)
+* Zeitverlauf (saisonale Auffälligkeiten)
+* Keywords in Titeln / Künstlernamen
+
+## Angaben zur Dokumentation
+
+* Welche Daten wurden wie geholt?
+* Welche Auswertungen und wieso?
+* Ergebnisse und ausführliche Interpretation
