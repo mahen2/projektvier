@@ -1,4 +1,8 @@
-*.csv
+# Sublime-text specific files #
+#######################
+*.sublime-project
+*.sublime-workspace
+
 
 # Compiled source #
 ###################
