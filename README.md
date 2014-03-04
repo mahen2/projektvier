@@ -5,6 +5,10 @@ Das vierte und letzte Projekt für das Informetrie Projektseminar im WS 2013/14.
 
 ___
 
+
+## TODO
+* Der 1live Server gibt wohl manchmal keine validen Antworten, der Crawler bricht hier derzeit ab. Muss irgendwie abgefangen werden
+
 ## Eckdaten
 
 * Abgabe: 12.03.2014
