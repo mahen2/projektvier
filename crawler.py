@@ -16,7 +16,7 @@ def generate_1live_url(day, hour, minute):
 
     """
     url = "http://www.einslive.de/musik/playlists/index."\
-        "jsp?wday=%i&hour=%i&minute=%i"
+        "jsp?wday=%s&hour=%s&minute=%s"
     return url % (day, hour, minute)
 
 
@@ -25,34 +25,46 @@ def fetch_1live_data(_1live_website_url):
     and return it as a list
 
     """
-    c = urllib2.urlopen(_1live_website_url)
-    contents = c.read()
-    soup = BeautifulSoup(contents)
-    # Tabelle mit den Songs holen über Klassennamen:
-    threetracks = BeautifulSoup(soup.select(".wsPlaylistsEL")[0].prettify())
-    # Datum steht manchmal in den Einträgen, manchmal nicht (komisch!!),
-    # deshalb muss es aus der Tabelle gelesen und später in die Songtabelle
-    # eingefügt werden:
-    table = threetracks.table
-    # enthält z.B.: Die am Samstag, 11. Januar 2014, 14:20 Uhr gespielten Titel
-    summary = table['summary']
-    # nur das Datum rausholen:
-    date = summary.split(', ')[1]
+    try:
+        c = urllib2.urlopen(_1live_website_url)
+        contents = c.read()
+        soup = BeautifulSoup(contents)
+        # return none if there are no titles at the specific time for some
+        # reason
+        if not "Es konnten keine Titel gefunden werden." in soup:
+            # Tabelle mit den Songs holen über Klassennamen:
+            threetracks = BeautifulSoup(
+                soup.select(".wsPlaylistsEL")[0].prettify())
+            # Datum steht manchmal in den Einträgen, manchmal nicht (komisch!!),
+            # deshalb muss es aus der Tabelle gelesen und später in die Songtabelle
+            # eingefügt werden:
+            table = threetracks.table
+            # enthält z.B.: Die am Samstag, 11. Januar 2014, 14:20 Uhr gespielten
+            # Titel
+            summary = table['summary']
+            # nur das Datum rausholen:
+            date = summary.split(', ')[1]
 
-    # es werden drei Songs angezeigt, finde die entsprechenden Tabellenzeilen:
-    played_songs = threetracks.find_all(
-        "tr", {"class": re.compile(r"^(wsEven|wsOdd)$")})
-    songs = []
-    for song in played_songs:
-        artist = song.select('td[headers="pltab1artist"]')[
-            0].string.strip().encode('utf-8')
-        title = song.select('td[headers="pltab1title"]')[
-            0].string.strip().encode('utf-8')
-        time = (date + ", " + song.select('td[headers="pltab1time"]')[0]
-                .string.strip()).encode('utf-8')
-        # jeden Song in Liste schreiben:
-        songs.append([artist, title, time])
-    return songs
+            # es werden drei Songs angezeigt, finde die entsprechenden
+            # Tabellenzeilen:
+            played_songs = threetracks.find_all(
+                "tr", {"class": re.compile(r"^(wsEven|wsOdd)$")})
+            songs = []
+            for song in played_songs:
+                artist = song.select('td[headers="pltab1artist"]')[
+                    0].string.strip().encode('utf-8')
+                title = song.select('td[headers="pltab1title"]')[
+                    0].string.strip().encode('utf-8')
+                time = (date + ", " + song.select('td[headers="pltab1time"]')[0]
+                        .string.strip()).encode('utf-8')
+                # jeden Song in Liste schreiben:
+                songs.append([artist, title, time])
+        else:
+            return None
+    except IndexError:
+        return None
+    else:
+        return songs
 
 
 def dic_to_csv(dic, filename):
@@ -65,15 +77,20 @@ def dic_to_csv(dic, filename):
 if __name__ == "__main__":
     playlist_dic = {}
     filename = "playlist.csv"
-    # nested for loop to fetch all songs for the last year
-    for day in range(1, 361):
+    # nested for-loop to fetch all songs for the last year
+    for day in range(2, 361):
         for hour in range(1, 24):
-            print hour
-            for minute in range(1, 61):
+            if hour < 10:
+                hour = "0%i" % hour
+            for minute in range(1, 61, 3):
+                if minute < 10:
+                    minute = "0%i" % minute
                 url = generate_1live_url(day, hour, minute)
                 songs = fetch_1live_data(url)
-                for song in songs:
-                    playlist_dic[song[2]] = [song[0], song[1]]
+                # Sometimes there are no songs for a specific time
+                if songs:
+                    for song in songs:
+                        playlist_dic[song[2]] = [song[0], song[1]]
             # TODO: Save at appropriate time intervals
             dic_to_csv(playlist_dic, filename)
     # CSV ausgeben:
