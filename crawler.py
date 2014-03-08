@@ -44,7 +44,6 @@ def fetch_1live_data(_1live_website_url):
             summary = table['summary']
             # nur das Datum rausholen:
             date = summary.split(', ')[1]
-
             # es werden drei Songs angezeigt, finde die entsprechenden
             # Tabellenzeilen:
             played_songs = threetracks.find_all(
@@ -61,6 +60,7 @@ def fetch_1live_data(_1live_website_url):
                 songs.append([artist, title, time])
         else:
             return None
+    # Return none on IndexError (server gives an invalid response)
     except IndexError:
         return None
     else:
@@ -78,11 +78,15 @@ if __name__ == "__main__":
     playlist_dic = {}
     filename = "playlist.csv"
     # nested for-loop to fetch all songs for the last year
-    for day in range(2, 361):
+    for day in range(0, 361):
         for hour in range(1, 24):
+            # Add a zero to the hour if it is smaller than 10 (the 1live-server
+            # requires this)
             if hour < 10:
                 hour = "0%i" % hour
             for minute in range(1, 61, 3):
+                # Add a zero if the minute is smaller than 10 (the 1live-server
+                # requires this)
                 if minute < 10:
                     minute = "0%i" % minute
                 url = generate_1live_url(day, hour, minute)
@@ -91,9 +95,8 @@ if __name__ == "__main__":
                 if songs:
                     for song in songs:
                         playlist_dic[song[2]] = [song[0], song[1]]
-            # TODO: Save at appropriate time intervals
             dic_to_csv(playlist_dic, filename)
     # CSV ausgeben:
-    cr = csv.reader(open(filename, "rb"))
-    for row in cr:
-        print row
+    # cr = csv.reader(open(filename, "rb"))
+    # for row in cr:
+    #     print row
