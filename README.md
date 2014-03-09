@@ -30,8 +30,8 @@ ___
 
 ## Aufgabenstellung
 
-* Daten erheben (API oder Crawler)
-* Daten persistent abspeichern
+* ~~Daten erheben (API oder Crawler)~~
+* ~~Daten persistent abspeichern~~
 * Daten auswerten
 * Auswertung visualisieren (matplotlib)
 * Dokumentation und Beschreibung (Sphinx)
