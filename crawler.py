@@ -6,6 +6,9 @@
 import urllib2
 import re
 import csv
+import collections
+from datetime import datetime
+import locale
 from bs4 import BeautifulSoup
 
 
@@ -67,6 +70,51 @@ def fetch_1live_data(_1live_website_url):
         return songs
 
 
+def import_1live_data(filename):
+    """
+    Import the fetched 1live data from a csv file to an OrderedDict sorted by
+    date and time
+
+    """
+    # Set locale to de_DE to read the 1live data correctly
+    locale.setlocale(locale.LC_ALL, "de_DE")
+    temp_dic = {}
+    # Create a list for the sorted 1live data
+    # playlist = []
+    # Create a OrderedDict for the sorted 1live date
+    playlist_dic = collections.OrderedDict()
+    # Read the file
+    cr = csv.reader(open(filename, "rb"))
+    for song in cr:
+        # Split date and time
+        split_str = song[0].split(" ")
+
+        for elem in split_str:
+            # Search for the time since the input is not consistent
+            if ":" in elem:
+                day = split_str[0].replace(".", "")
+                # Append a zero if the date is smaller then 10
+                day = day if int(day) > 9 else "0" + day
+                month = split_str[1]
+                year = split_str[2].replace(",", "")
+                # Create a sortable datetime object
+                dt = datetime.strptime("%s%s%s%s" %
+                                      (day, month, year, " " + elem),
+                                       "%d%B%Y %H:%M:%S")
+        # Save in a temporary dictionary
+        temp_dic[dt] = [song[1], song[2]]
+    # Sort the temporary dictionary and append each item to the OrderedDict
+    for key, value in sorted(temp_dic.iteritems(), key=lambda k: k[0]):
+        # playlist.append([key, value])
+        playlist_dic[key] = value
+    # Set locale back to default settings
+    locale.setlocale(locale.LC_ALL, "")
+    # Return the OrderedDict
+    return playlist_dic
+    # Return the nested List
+    # return playlist
+
+
 def dic_to_csv(dic, filename):
     """ Write a dictionary with lists as values to a csv-file """
     with open(filename, 'wb') as file_:
@@ -75,28 +123,38 @@ def dic_to_csv(dic, filename):
             writer.writerow([key] + value)
 
 if __name__ == "__main__":
-    playlist_dic = {}
     filename = "playlist.csv"
+    # Fetch the 1live radio data ###
+    # playlist_dic = {}
     # nested for-loop to fetch all songs for the last year
-    for day in range(0, 361):
-        for hour in range(1, 24):
-            # Add a zero to the hour if it is smaller than 10 (the 1live-server
-            # requires this)
-            if hour < 10:
-                hour = "0%i" % hour
-            for minute in range(1, 61, 3):
-                # Add a zero if the minute is smaller than 10 (the 1live-server
-                # requires this)
-                if minute < 10:
-                    minute = "0%i" % minute
-                url = generate_1live_url(day, hour, minute)
-                songs = fetch_1live_data(url)
-                # Sometimes there are no songs for a specific time
-                if songs:
-                    for song in songs:
-                        playlist_dic[song[2]] = [song[0], song[1]]
-            dic_to_csv(playlist_dic, filename)
-    # CSV ausgeben:
-    # cr = csv.reader(open(filename, "rb"))
-    # for row in cr:
-    #     print row
+    # for day in range(0, 361):
+    #     for hour in range(1, 24):
+    # Add a zero to the hour if it is smaller than 10 (the 1live-server
+    # requires this)
+    #         if hour < 10:
+    #             hour = "0%i" % hour
+    #         for minute in range(1, 61, 3):
+    # Add a zero if the minute is smaller than 10 (the 1live-server
+    # requires this)
+    #             if minute < 10:
+    #                 minute = "0%i" % minute
+    #             url = generate_1live_url(day, hour, minute)
+    #             songs = fetch_1live_data(url)
+    # Sometimes there are no songs for a specific time
+    #             if songs:
+    #                 for song in songs:
+    #                     playlist_dic[song[2]] = [song[0], song[1]]
+    #         dic_to_csv(playlist_dic, filename)
+
+    # Import the fetched data ###
+    einslive_data = import_1live_data(filename)
+
+    # Time can be received like this
+    print einslive_data.keys()[0].strftime("%d.%B.%Y %H:%M Uhr")
+
+    # Example for all data of a song
+    locale.setlocale(locale.LC_ALL, "de_DE")
+    print "Datum: ", einslive_data.keys()[0].strftime("%d.%B.%Y %H:%M Uhr")
+    print "Interpret: ", einslive_data[einslive_data.keys()[0]][0]
+    print "Titel: ", einslive_data[einslive_data.keys()[0]][1]
+    locale.setlocale(locale.LC_ALL, "")
