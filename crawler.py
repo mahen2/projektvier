@@ -9,6 +9,7 @@ import csv
 import collections
 from datetime import datetime
 import locale
+import sys
 from bs4 import BeautifulSoup
 
 
@@ -77,7 +78,10 @@ def import_1live_data(filename):
 
     """
     # Set locale to de_DE to read the 1live data correctly
-    locale.setlocale(locale.LC_ALL, "de_DE")
+    if sys.platform == "win32":
+        locale.setlocale(locale.LC_ALL, "deu_deu")
+    else:
+        locale.setlocale(locale.LC_ALL, "de_DE")
     temp_dic = {}
     # Create a list for the sorted 1live data
     # playlist = []
@@ -97,10 +101,12 @@ def import_1live_data(filename):
                 day = day if int(day) > 9 else "0" + day
                 month = split_str[1]
                 year = split_str[2].replace(",", "")
+                datet = "%s%s%s %s" % (day, month, year, elem)
+                # Doesn't work so far
+                if sys.platform == "win32":
+                    datet.encode("iso-8859-16")
                 # Create a sortable datetime object
-                dt = datetime.strptime("%s%s%s%s" %
-                                      (day, month, year, " " + elem),
-                                       "%d%B%Y %H:%M:%S")
+                dt = datetime.strptime(datet, "%d%B%Y %H:%M:%S")
         # Save in a temporary dictionary
         temp_dic[dt] = [song[1], song[2]]
     # Sort the temporary dictionary and append each item to the OrderedDict
@@ -153,7 +159,11 @@ if __name__ == "__main__":
     print einslive_data.keys()[0].strftime("%d.%B.%Y %H:%M Uhr")
 
     # Example for all data of a song
-    locale.setlocale(locale.LC_ALL, "de_DE")
+    # Set locale to de_DE to read the 1live data correctly
+    if sys.platform == "win32":
+        locale.setlocale(locale.LC_ALL, "deu_deu")
+    else:
+        locale.setlocale(locale.LC_ALL, "de_DE")
     print "Datum: ", einslive_data.keys()[0].strftime("%d.%B.%Y %H:%M Uhr")
     print "Interpret: ", einslive_data[einslive_data.keys()[0]][0]
     print "Titel: ", einslive_data[einslive_data.keys()[0]][1]
