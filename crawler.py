@@ -120,6 +120,27 @@ def import_1live_data(filename):
     # Return the nested List
     # return playlist
 
+# Häufigkeit Künstler
+def count_singers(dic):
+    singer = {}
+    for song in dic.values():
+        if song[0] in singer.keys():
+            singer[song[0]] = singer[song[0]] + 1
+        else:
+            singer[song[0]] = 1
+    for band, count in sorted(singer.items(), key=lambda x: x[1]):
+        print band + ": " + str(count)
+
+# Häufigkeit Songs
+def count_songs(dic):
+    songtitel = {}
+    for thing in dic.values():
+        if thing[1] in songtitel.keys():
+            songtitel[thing[1]] = songtitel[thing[1]] + 1
+        else:
+            songtitel[thing[1]] = 1
+    for titel, anz in sorted(songtitel.items(), key=lambda x: x[1]):
+        print titel + ": " + str(anz)
 
 def dic_to_csv(dic, filename):
     """ Write a dictionary with lists as values to a csv-file """

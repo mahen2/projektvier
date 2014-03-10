@@ -36,13 +36,29 @@ ___
 * Auswertung visualisieren (matplotlib)
 * Dokumentation und Beschreibung (Sphinx)
 
-## Auswertungsbeispiele
+## Auswertung
 
-* Häufigkeit (Songs, Künstler)
-* Zeitpunkt (Uhrzeit, Tag)
-* Top X (Wochencharts, etc.)
-* Zeitverlauf (saisonale Auffälligkeiten)
-* Keywords in Titeln / Künstlernamen
+* ~~Häufigkeit (Songs)~~
+* ~~Häufigkeit (Künstler)~~
+* Zeitpunkt (Uhrzeit) 
+* Zeitpunkt (Wochentag)
+* Top 5 letzter Monat
+* Top 10 letzte Woche
+* Keywords in Titeln: Summer/Sun/Sommer
+* Keywords in Titeln: Christmas/Weihnachten/Santa, 
+* Keywords in Titeln: Love/Liebe
+
+## Visualisierung
+
+* Häufigkeit (Songs)
+* Häufigkeit (Künstler)
+* Zeitpunkt (Uhrzeit) 
+* Zeitpunkt (Wochentag)
+* Top 5 letzter Monat
+* Top 10 letzte Woche
+* Keywords in Titeln: Summer/Sun/Sommer
+* Keywords in Titeln: Christmas/Weihnachten/Santa, 
+* Keywords in Titeln: Love/Liebe
 
 ## Angaben zur Dokumentation
 
