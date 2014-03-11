@@ -41,7 +41,7 @@ ___
 * ~~Häufigkeit (Songs)~~
 * ~~Häufigkeit (Künstler)~~
 * ~~Zeitpunkt (Uhrzeit)~~ 
-* Zeitpunkt (Wochentag)
+* Zeitpunkt (Wochentag) BITTE ERGÄNZEN
 * Top 5 letzter Monat
 * Top 10 letzte Woche
 * Keywords in Titeln: Summer/Sun/Sommer

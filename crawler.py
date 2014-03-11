@@ -153,13 +153,13 @@ def song_time(dic):
 				songtime[key.strftime("%H")] = songtime[key.strftime("%H")] + 1
 	print songtime
 
-# Wochentag - noch unfertig
+# Wochentag
 def song_weekday(dic):
-	weekdays = {'Mon': 0,'Tue': 0,'Wed': 0,'Thu': 0,'Fri': 0,'Sat': 0,'Sun': 0}
+	weekdays = {'Montag': 0,'Dienstag': 0,'Mittwoch': 0,'Donnerstag': 0,'Freitag': 0,'Samstag': 0,'Sonntag': 0}
 	for key, value in dic.iteritems():
 		if value[1] == 'Stolen Dance':
-			if key.strftime("__") in songtime.keys():
-				songtime[key.strftime("__")] = songtime[key.strftime("__")] + 1
+			if key.strftime("%A") in weekdays.keys():
+				weekdays[key.strftime("%A")] = weekdays[key.strftime("%A")] + 1
 	print weekdays
 
 
@@ -218,3 +218,4 @@ if __name__ == "__main__":
 #	song_time(einslive_data)
 #	count_songs(einslive_data)
 #	count_singers(einslive_data)
+#	song_weekday(einslive_data)
