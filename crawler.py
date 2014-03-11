@@ -152,7 +152,13 @@ def song_time(dic):
 		if value[1] == 'Stolen Dance':
 			if key.strftime("%H") in songtime.keys():
 				songtime[key.strftime("%H")] = songtime[key.strftime("%H")] + 1
-	print songtime
+
+	labels=songtime.keys()
+	sizes=songtime.values()
+	colors=['yellowgreen', 'gold', 'lightskyblue', 'lightcoral', 'blue', 'white', 'red', 'green', 'cyan', 'magenta', 'yellow', 'white', 'yellowgreen', 'gold', 'lightskyblue', 'lightcoral', 'blue', 'white', 'red', 'green', 'cyan', 'magenta', 'yellow', 'white']
+	plt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', shadow=True)
+	plt.axis('equal')
+	plt.show()
 
 # Wochentag
 def song_weekday(dic):
@@ -162,7 +168,6 @@ def song_weekday(dic):
 			if key.strftime("%A") in weekdays.keys():
 				weekdays[key.strftime("%A")] = weekdays[key.strftime("%A")] + 1
 
-#	labels='Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
 	labels=weekdays.keys()
 	sizes=weekdays.values()
 	colors=['yellowgreen', 'gold', 'lightskyblue', 'lightcoral', 'blue', 'white','red']
@@ -223,7 +228,7 @@ if __name__ == "__main__":
 	print "TEST"
 	print einslive_data.keys()[0].strftime("%H")
 
-#	song_time(einslive_data)
+	song_time(einslive_data)
 #	count_songs(einslive_data)
 #	count_singers(einslive_data)
-	song_weekday(einslive_data)
+#	song_weekday(einslive_data)
