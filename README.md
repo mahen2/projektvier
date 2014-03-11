@@ -52,7 +52,7 @@ ___
 
 * Häufigkeit (Songs)
 * Häufigkeit (Künstler)
-* Zeitpunkt (Uhrzeit) 
+* ~~Zeitpunkt (Uhrzeit)~~
 * ~~Zeitpunkt (Wochentag)~~
 * Top 5 letzter Monat
 * Top 10 letzte Woche

@@ -12,6 +12,7 @@ import locale
 import sys
 from bs4 import BeautifulSoup
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def generate_1live_url(day, hour, minute):
@@ -189,23 +190,23 @@ if __name__ == "__main__":
 	# playlist_dic = {}
 	# nested for-loop to fetch all songs for the last year
 	# for day in range(0, 361):
-	#	 for hour in range(1, 24):
+	#	for hour in range(1, 24):
 	# Add a zero to the hour if it is smaller than 10 (the 1live-server
 	# requires this)
-	#		 if hour < 10:
-	#			 hour = "0%i" % hour
-	#		 for minute in range(1, 61, 3):
+	#		if hour < 10:
+	#			hour = "0%i" % hour
+	#		for minute in range(1, 61, 3):
 	# Add a zero if the minute is smaller than 10 (the 1live-server
 	# requires this)
-	#			 if minute < 10:
-	#				 minute = "0%i" % minute
-	#			 url = generate_1live_url(day, hour, minute)
-	#			 songs = fetch_1live_data(url)
+	#			if minute < 10:
+	#				minute = "0%i" % minute
+	#			url = generate_1live_url(day, hour, minute)
+	#			songs = fetch_1live_data(url)
 	# Sometimes there are no songs for a specific time
-	#			 if songs:
-	#				 for song in songs:
-	#					 playlist_dic[song[2]] = [song[0], song[1]]
-	#		 dic_to_csv(playlist_dic, filename)
+	#			if songs:
+	#				for song in songs:
+	#					playlist_dic[song[2]] = [song[0], song[1]]
+	#		dic_to_csv(playlist_dic, filename)
 
 	# Import the fetched data ###
 	einslive_data = import_1live_data(filename)
@@ -228,7 +229,7 @@ if __name__ == "__main__":
 	print "TEST"
 	print einslive_data.keys()[0].strftime("%H")
 
-	song_time(einslive_data)
-#	count_songs(einslive_data)
-#	count_singers(einslive_data)
-#	song_weekday(einslive_data)
+#	song_time(einslive_data)
+#   count_songs(einslive_data)
+	count_singers(einslive_data)
+#   song_weekday(einslive_data)
