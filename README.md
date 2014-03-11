@@ -11,7 +11,7 @@ ___
 
 ## Eckdaten
 
-* Abgabe: 12.03.2014
+* Abgabe: 12.03.2014, 22:30 Uhr
 * ~~Frist für eigene Idee: 13.01.2014, 16 Uhr~~
 * ~~Frist für Teamaufteilung 13.01.2014, 12 Uhr~~
 
@@ -41,11 +41,11 @@ ___
 * ~~Häufigkeit (Songs)~~
 * ~~Häufigkeit (Künstler)~~
 * ~~Zeitpunkt (Uhrzeit)~~ 
-* Zeitpunkt (Wochentag) BITTE ERGÄNZEN
+* ~~Zeitpunkt (Wochentag)~~
 * Top 5 letzter Monat
 * Top 10 letzte Woche
 * Keywords in Titeln: Summer/Sun/Sommer
-* Keywords in Titeln: Christmas/Weihnachten/Santa, 
+* Keywords in Titeln: Christmas/Weihnachten/Santa 
 * Keywords in Titeln: Love/Liebe
 
 ## Visualisierung
@@ -53,7 +53,7 @@ ___
 * Häufigkeit (Songs)
 * Häufigkeit (Künstler)
 * Zeitpunkt (Uhrzeit) 
-* Zeitpunkt (Wochentag)
+* ~~Zeitpunkt (Wochentag)~~
 * Top 5 letzter Monat
 * Top 10 letzte Woche
 * Keywords in Titeln: Summer/Sun/Sommer

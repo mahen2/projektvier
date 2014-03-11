@@ -11,6 +11,7 @@ from datetime import datetime
 import locale
 import sys
 from bs4 import BeautifulSoup
+import matplotlib.pyplot as plt
 
 
 def generate_1live_url(day, hour, minute):
@@ -160,8 +161,15 @@ def song_weekday(dic):
 		if value[1] == 'Stolen Dance':
 			if key.strftime("%A") in weekdays.keys():
 				weekdays[key.strftime("%A")] = weekdays[key.strftime("%A")] + 1
-	print weekdays
 
+#	labels='Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
+	labels=weekdays.keys()
+	sizes=weekdays.values()
+	colors=['yellowgreen', 'gold', 'lightskyblue', 'lightcoral', 'blue', 'white','red']
+	explode=(0, 0, 0, 0, 0, 0, 0) # explode nothing for now
+	plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.1f%%', shadow=True)
+	plt.axis('equal')
+	plt.show()
 
 def dic_to_csv(dic, filename):
 	""" Write a dictionary with lists as values to a csv-file """
@@ -218,4 +226,4 @@ if __name__ == "__main__":
 #	song_time(einslive_data)
 #	count_songs(einslive_data)
 #	count_singers(einslive_data)
-#	song_weekday(einslive_data)
+	song_weekday(einslive_data)
