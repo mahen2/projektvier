@@ -183,6 +183,7 @@ def count_songs(dic):
 
 	ind = np.arange(N)  # the x locations for the groups
 	width = 0.5       # the width of the bars
+	fig, ax = plt.subplots()
 
 	rects1 = ax.bar(ind, menMeans, width, color='#90ee90')
 
@@ -210,8 +211,8 @@ def song_time(dic):
                 '07': 0, '08': 0, '09': 0, '10': 0, '11': 0, '12': 0, '13': 0,
                 '14': 0, '15': 0, '16': 0, '17': 0, '18': 0, '19': 0, '20': 0,
                 '21': 0, '22': 0, '23': 0}
-# Wieso ändert sich die Reihenfolge der Keys?
     for key, value in dic.iteritems():
+		# hier Beispielsong angeben:
         if value[1] == 'Stolen Dance':
             if key.strftime("%H") in songtime.keys():
                 songtime[key.strftime("%H")] = songtime[key.strftime("%H")] + 1
@@ -226,6 +227,7 @@ def song_time(dic):
     plt.pie(sizes, labels=labels, colors=colors,
             autopct='%1.1f%%', shadow=True)
     plt.axis('equal')
+    plt.title('Tageszeit des Beispielsongs', color='#000000')
     plt.show()
 
 # Wochentag
@@ -235,6 +237,7 @@ def song_weekday(dic):
     weekdays = {'Montag': 0, 'Dienstag': 0, 'Mittwoch': 0,
                 'Donnerstag': 0, 'Freitag': 0, 'Samstag': 0, 'Sonntag': 0}
     for key, value in dic.iteritems():
+		# hier Beispielsong angeben:
         if value[1] == 'Stolen Dance':
             if key.strftime("%A") in weekdays.keys():
                 weekdays[key.strftime("%A")] = weekdays[key.strftime("%A")] + 1
@@ -247,10 +250,11 @@ def song_weekday(dic):
     plt.pie(sizes, explode=explode, labels=labels,
             colors=colors, autopct='%1.1f%%', shadow=True)
     plt.axis('equal')
+    plt.title('Wochentag des Beispielsongs', color='#000000')
+	
     plt.show()
 	
 
-# wörter
 
 def autolabel(rects):
 	    # attach some text labels
@@ -286,7 +290,7 @@ def keywords(dic, word, word2='', word3=''):
 			monate_z[eintrag] = 1
 	sorted_monate = sorted(monate_z.iteritems(), key=operator.itemgetter(1))
 
-	if (len(sorted_monate)>11): # überprüfung notwendig, manche benutzen nicht 10 verschiedene clients sondern vllt weniger
+	if (len(sorted_monate)>11): 
 	    N = 12
 	else:
 	    N = len(sorted_monate)
@@ -334,30 +338,33 @@ def dic_to_csv(dic, filename):
             writer.writerow([key] + value)
 
 if __name__ == "__main__":
+    print "bitte warten, Grafiken werden erstellt..."
     filename = "playlist.csv"
+	'''
     # Fetch the 1live radio data ###
-    # playlist_dic = {}
+    playlist_dic = {}
     # nested for-loop to fetch all songs for the last year
-    # for day in range(0, 361):
-    #	for hour in range(1, 24):
+    for day in range(0, 361):
+        for hour in range(1, 24):
     # Add a zero to the hour if it is smaller than 10 (the 1live-server
     # requires this)
-    #		if hour < 10:
-    #			hour = "0%i" % hour
-    #		for minute in range(1, 61, 3):
+            if hour < 10:
+                hour = "0%i" % hour
+            for minute in range(1, 61, 3):
     # Add a zero if the minute is smaller than 10 (the 1live-server
     # requires this)
-    #			if minute < 10:
-    #				minute = "0%i" % minute
-    #			url = generate_1live_url(day, hour, minute)
-    #			songs = fetch_1live_data(url)
+                if minute < 10:
+                    minute = "0%i" % minute
+                url = generate_1live_url(day, hour, minute)
+                songs = fetch_1live_data(url)
     # Sometimes there are no songs for a specific time
-    #			if songs:
-    #				for song in songs:
-    #					playlist_dic[song[2]] = [song[0], song[1]]
-    #		dic_to_csv(playlist_dic, filename)
+                if songs:
+                    for song in songs:
+                        playlist_dic[song[2]] = [song[0], song[1]]
+            dic_to_csv(playlist_dic, filename)
 
     # Import the fetched data ###
+	'''
     einslive_data = import_1live_data(filename)
 
 
