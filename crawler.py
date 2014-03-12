@@ -360,23 +360,6 @@ if __name__ == "__main__":
     # Import the fetched data ###
     einslive_data = import_1live_data(filename)
 
-    # Time can be received like this
-    print einslive_data.keys()[0].strftime("%d.%B.%Y %H:%M Uhr")
-
-    # Example for all data of a song
-    # Set locale to de_DE to read the 1live data correctly
-    if sys.platform == "win32":
-        locale.setlocale(locale.LC_ALL, "deu_deu")
-    else:
-        locale.setlocale(locale.LC_ALL, "de_DE")
-
-    print "Datum: ", einslive_data.keys()[0].strftime("%d.%B.%Y %H:%M Uhr")
-    print "Interpret: ", einslive_data[einslive_data.keys()[0]][0]
-    print "Titel: ", einslive_data[einslive_data.keys()[0]][1]
-    locale.setlocale(locale.LC_ALL, "")
-
-    print "TEST"
-    print einslive_data.keys()[0].strftime("%H")
 
     song_time(einslive_data)
     count_songs(einslive_data)
