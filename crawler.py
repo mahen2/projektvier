@@ -13,6 +13,7 @@ import sys
 from bs4 import BeautifulSoup
 import matplotlib.pyplot as plt
 import numpy as np
+import operator
 
 
 def generate_1live_url(day, hour, minute):
@@ -141,18 +142,65 @@ def count_singers(dic):
         print band + ": " + str(count)
 
 # Häufigkeit Songs
+fig, ax = plt.subplots()
 
 
 def count_songs(dic):
-    songtitel = {}
+	songtitel = {}
 
-    for thing in dic.values():
-        if thing[1] in songtitel.keys():
-            songtitel[thing[1]] = songtitel[thing[1]] + 1
-        else:
-            songtitel[thing[1]] = 1
-    for titel, anz in sorted(songtitel.items(), key=lambda x: x[1]):
-        print titel + ": " + str(anz)
+	for thing in dic.values():
+		if thing[1] in songtitel.keys():
+			songtitel[thing[1]] = songtitel[thing[1]] + 1
+		else:
+			songtitel[thing[1]] = 1
+	#sorted_songtitel = sorted(songtitel.iteritems(), key=operator.itemgetter(1))
+	#print sorted_songtitel
+	songs_simple_dic = {}
+	i=0
+	for titel, anz in sorted(songtitel.items(), key=lambda x: x[1], reverse=True):
+		i+=1
+		print titel + ": " + str(anz)
+		songs_simple_dic[titel]=anz
+		if i==10:
+			break
+	print "schleife zuende"
+	sorted_songs = sorted(songs_simple_dic.iteritems(), key=operator.itemgetter(1))
+
+	if (len(sorted_songs)>=10): # überprüfung notwendig, manche benutzen nicht 10 verschiedene clients sondern vllt weniger
+		N = 10
+	else:
+		N = len(sorted_songs)
+	print "len: " + str(len(sorted_songs))
+
+	h_values = []
+	h_keys = []
+	for key, value in sorted_songs:
+		h_values.append(value)
+		h_keys.append(key.decode('utf-8'))
+
+
+	menMeans = h_values[-N:]
+
+	ind = np.arange(N)  # the x locations for the groups
+	width = 0.5       # the width of the bars
+
+	rects1 = ax.bar(ind, menMeans, width, color='#90ee90')
+
+	plt.subplots_adjust(top=0.85, bottom=0.27)
+	# add some
+	plt.xticks(rotation=50)
+	ax.set_ylabel('Anzahl')
+	ax.set_title(u"Top 10 Songs")
+	ax.set_xticks(ind+width-0.5)
+	ax.set_xticklabels( h_keys[-N:] )
+
+
+
+	autolabel(rects1)
+
+	plt.show()
+    
+	print songs_simple_dic
 
 # Uhrzeit
 
@@ -200,6 +248,82 @@ def song_weekday(dic):
             colors=colors, autopct='%1.1f%%', shadow=True)
     plt.axis('equal')
     plt.show()
+	
+
+# wörter
+
+def autolabel(rects):
+	    # attach some text labels
+	for rect in rects:
+		height = rect.get_height()
+		ax.text(rect.get_x()+rect.get_width()/2., 0.65*height, '%d'%int(height), ha='center', va='bottom')
+
+def keywords(dic, word, word2='', word3=''):
+	return_dic = {}
+	for key,eintrag in dic.iteritems():
+		if word.lower() in eintrag[1].lower():
+			return_dic[key]=eintrag
+		if word2:
+			if word2.lower() in eintrag[1].lower():
+				return_dic[key]=eintrag
+		if word3:
+			if word3.lower() in eintrag[1].lower():
+				return_dic[key]=eintrag
+	unique_songs = set()
+	for eintrag in return_dic.iteritems():
+		unique_songs.add(str(eintrag[1]))
+	for song in unique_songs:
+		print song
+		
+	monate = []
+	monate_z = {}
+	for e in return_dic.iterkeys():
+		monate.append(e.strftime('%B'))
+	for eintrag in monate:
+		if eintrag in monate_z:
+			monate_z[eintrag] += 1
+		else:
+			monate_z[eintrag] = 1
+	sorted_monate = sorted(monate_z.iteritems(), key=operator.itemgetter(1))
+
+	if (len(sorted_monate)>11): # überprüfung notwendig, manche benutzen nicht 10 verschiedene clients sondern vllt weniger
+	    N = 12
+	else:
+	    N = len(sorted_monate)
+	print "len: " + str(len(sorted_monate))
+
+	h_values = []
+	h_keys = []
+	for key, value in sorted_monate:
+	    h_values.append(value)
+	    h_keys.append(key.decode('utf-8'))
+
+
+	menMeans = h_values[-N:]
+
+	ind = np.arange(N)  # the x locations for the groups
+	width = 0.5       # the width of the bars
+
+	fig, ax = plt.subplots()
+	rects1 = ax.bar(ind, menMeans, width, color='#90ee90')
+
+	plt.subplots_adjust(top=0.85, bottom=0.27)
+	# add some
+	plt.xticks(rotation=50)
+	ax.set_ylabel('Anzahl')
+	ax.set_title(u"Top Monate für " + word + " " + word2 + " " + word3+ " (Songliste siehe Konsole)")
+	ax.set_xticks(ind+width-0.5)
+	ax.set_xticklabels( h_keys[-N:] )
+
+
+
+	autolabel(rects1)
+
+	plt.show()
+
+
+	return sorted_monate
+	
 
 
 def dic_to_csv(dic, filename):
@@ -254,7 +378,10 @@ if __name__ == "__main__":
     print "TEST"
     print einslive_data.keys()[0].strftime("%H")
 
-#   song_time(einslive_data)
-#   count_songs(einslive_data)
+    song_time(einslive_data)
+    count_songs(einslive_data)
     count_singers(einslive_data)
-#   song_weekday(einslive_data)
+    song_weekday(einslive_data)
+    keywords(einslive_data, 'love', 'liebe')
+    keywords(einslive_data, 'christmas', 'weihnachten', 'santa')
+    keywords(einslive_data, 'summer', 'sommer', 'sun')
